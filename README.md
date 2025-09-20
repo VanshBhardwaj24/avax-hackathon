@@ -1,4 +1,4 @@
-Avalanche P2P Exchange Platform
+                                                      *PEERFLOW*
 
 A decentralized peer-to-peer trading system powered by Avalanche C-Chain, utilizing Solidity smart contracts and React for the interface.
 
