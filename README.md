@@ -1,157 +1,193 @@
-# P2P Order Flow - Avalanche C-Chain
+Avalanche P2P Exchange Platform
 
-A decentralized peer-to-peer order management system built on Avalanche C-Chain using Solidity smart contracts and React.
+A decentralized peer-to-peer trading system powered by Avalanche C-Chain, utilizing Solidity smart contracts and React for the interface.
 
-## Features
+Capabilities
 
-- **Buyer View**: Browse and purchase orders from merchants
-- **Merchant View**: Create and manage orders for your products/services
-- **Smart Contract**: Secure order management with escrow functionality
-- **Avalanche Integration**: Built specifically for Avalanche C-Chain mainnet
+Customer Interface: Explore and purchase listings from vendors
 
-## Network Configuration
+Vendor Interface: Publish and oversee your product or service listings
 
-This application is configured to work on **Avalanche C-Chain Mainnet**:
-- **Chain ID**: 43114 (0xa86a)
-- **Currency**: AVAX
-- **RPC URL**: https://api.avax.network/ext/bc/C/rpc
-- **Block Explorer**: https://snowtrace.io
+Smart Contract Layer: Safeguarded transaction management with escrow mechanisms
 
-## Prerequisites
+Avalanche Compatibility: Designed specifically for Avalanche C-Chain networks
 
-- MetaMask wallet extension
-- Some AVAX tokens for gas fees and transactions
-- Node.js and npm installed
+Blockchain Settings
 
-## Setup Instructions
+This system is tailored for Avalanche C-Chain Mainnet:
 
-### 1. Install Dependencies
+Chain ID: 43114 (0xa86a)
 
-```bash
+Native Token: AVAX
+
+RPC Endpoint: https://api.avax.network/ext/bc/C/rpc
+
+Explorer Link: https://snowtrace.io
+
+Requirements
+
+MetaMask browser extension
+
+AVAX for network fees and trading
+
+Node.js and npm installed locally
+
+Installation Steps
+1. Install Dependencies
 npm install
-```
 
-### 2. Deploy Smart Contract to Avalanche
+2. Deploy Contract
+Option 1: Remix IDE
 
-#### Option A: Using Remix IDE
-1. Go to [Remix IDE](https://remix.ethereum.org/)
-2. Create a new file called `P2POrderFlow.sol` and paste the contract code
-3. Compile the contract
-4. In the Deploy tab, select "Injected Provider - MetaMask"
-5. Make sure MetaMask is connected to Avalanche C-Chain
-6. Deploy the contract
-7. Copy the deployed contract address
+Open Remix
 
-#### Option B: Using Hardhat (Advanced)
-1. Install Hardhat: `npm install --save-dev hardhat`
-2. Configure `hardhat.config.js` for Avalanche
-3. Deploy using: `npx hardhat run scripts/deploy.js --network avalanche`
+Create P2POrderFlow.sol and paste contract code
 
-### 3. Update Contract Address
+Compile the contract
 
-Update the `CONTRACT_ADDRESS` in `src/config.js` with your deployed contract address:
+Under "Deploy", choose "Injected Provider - MetaMask"
 
-```javascript
-CONTRACT_ADDRESS: "YOUR_DEPLOYED_CONTRACT_ADDRESS_HERE"
-```
+Ensure MetaMask is on Avalanche C-Chain
 
-### 4. Add Avalanche to MetaMask
+Deploy the contract
 
-The app will automatically prompt you to add Avalanche to MetaMask if it's not already configured. You can also manually add it:
+Copy the resulting contract address
 
-**Network Name**: Avalanche C-Chain  
-**RPC URL**: https://api.avax.network/ext/bc/C/rpc  
-**Chain ID**: 43114  
-**Currency Symbol**: AVAX  
-**Block Explorer URL**: https://snowtrace.io
+Option 2: Hardhat (Advanced Users)
 
-### 5. Run the Application
+Install Hardhat: npm install --save-dev hardhat
 
-```bash
+Set up hardhat.config.js for Avalanche deployment
+
+Deploy: npx hardhat run scripts/deploy.js --network avalanche
+
+3. Configure Contract Address
+
+Update src/config.js with your deployed contract:
+
+CONTRACT_ADDRESS: "ENTER_YOUR_CONTRACT_ADDRESS"
+
+4. Add Avalanche Network to MetaMask
+
+If MetaMask doesn’t already have Avalanche:
+
+Network Name: Avalanche C-Chain
+RPC: https://api.avax.network/ext/bc/C/rpc
+
+Chain ID: 43114
+Symbol: AVAX
+Explorer: https://snowtrace.io
+
+5. Launch Application
 npm start
-```
 
-## Usage
+How to Use
+Customers
 
-### For Buyers
-1. Connect your MetaMask wallet (must be on Avalanche C-Chain)
-2. Browse available orders in the Buyer View
-3. Click on an order to view details
-4. Click "Purchase" to buy the order
-5. Confirm the transaction in MetaMask
+Connect MetaMask (ensure C-Chain network)
 
-### For Merchants
-1. Connect your MetaMask wallet (must be on Avalanche C-Chain)
-2. Switch to Merchant View
-3. Fill out the order creation form
-4. Set your price in AVAX
-5. Click "Create Order" and confirm the transaction
+Browse listings in the buyer interface
 
-## Smart Contract Details
+View details of chosen orders
 
-The `P2POrderFlow.sol` contract includes:
-- Order creation and management
-- Escrow functionality for secure transactions
-- Order status tracking
-- Dispute resolution mechanisms
+Click "Purchase" to execute a transaction
 
-## Gas Fees
+Confirm in MetaMask
 
-- **Avalanche C-Chain** typically has very low gas fees (usually < $1 USD)
-- Gas fees are paid in AVAX
-- Ensure your wallet has sufficient AVAX for transactions
+Vendors
 
-## Troubleshooting
+Connect MetaMask (C-Chain required)
 
-### Wrong Network Error
-If you see a "Wrong Network" error:
-1. Click the "Switch to Avalanche" button
-2. MetaMask will prompt you to add/switch to Avalanche C-Chain
-3. Confirm the network addition/switch
+Switch to the merchant interface
 
-### Transaction Failures
-- Ensure you have sufficient AVAX for gas fees
-- Check that you're connected to Avalanche C-Chain
-- Verify the contract address is correct
+Fill out order creation form
 
-### MetaMask Issues
-- Clear MetaMask cache and reconnect
-- Ensure MetaMask is updated to the latest version
-- Try refreshing the page after switching networks
+Enter price in AVAX
 
-## Development
+Click "Publish Order" and approve in MetaMask
 
-### Project Structure
-```
+Smart Contract Overview
+
+The P2POrderFlow.sol contract provides:
+
+Order submission and tracking
+
+Secure escrow for all transactions
+
+Status monitoring for each order
+
+Basic mechanisms for dispute handling
+
+Transaction Fees
+
+Avalanche C-Chain offers low gas costs (often < $1 USD)
+
+Fees are paid in AVAX
+
+Ensure sufficient balance in your wallet
+
+Troubleshooting
+Network Mismatch
+
+Click “Switch Network”
+
+Approve Avalanche C-Chain in MetaMask
+
+Transaction Failures
+
+Confirm enough AVAX for fees
+
+Verify contract address
+
+Ensure MetaMask is on correct network
+
+MetaMask Problems
+
+Clear cache, reconnect wallet
+
+Update MetaMask
+
+Refresh app after switching networks
+
+Development Notes
+Folder Layout
 src/
-├── components/          # React components
-├── contexts/           # Web3 context and state management
-├── contracts/          # Contract ABI
-├── hooks/              # Custom React hooks
-└── config.js           # Network and contract configuration
-```
+├── components/      # React UI components
+├── contexts/        # Web3 context and state management
+├── contracts/       # ABI files
+├── hooks/           # Custom React hooks
+└── config.js        # Network and contract settings
 
-### Key Files
-- `src/config.js` - Network configuration and contract address
-- `src/contexts/Web3Context.js` - Web3 connection and contract interaction
-- `src/components/Header.js` - Network switching and wallet connection
-- `contracts/P2POrderFlow.sol` - Smart contract source code
+Core Files
 
-## Security Notes
+src/config.js → Network and contract info
 
-- Always verify the contract address before interacting
-- Use a dedicated wallet for testing
-- Never share your private keys
-- Test on Avalanche Fuji testnet before mainnet deployment
+src/contexts/Web3Context.js → Wallet connection and contract functions
 
-## Support
+src/components/Header.js → Network switch and wallet UI
 
-For issues or questions:
-1. Check the troubleshooting section above
-2. Verify your MetaMask network configuration
-3. Ensure you have sufficient AVAX balance
-4. Check the browser console for error messages
+contracts/P2POrderFlow.sol → Solidity smart contract
 
-## License
+Security Recommendations
 
-This project is open source and available under the MIT License. 
+Double-check contract addresses before usage
+
+Use separate wallets for testing
+
+Never share private keys
+
+Test on Fuji testnet before mainnet
+
+Support & Assistance
+
+Review troubleshooting guidelines
+
+Confirm MetaMask network
+
+Verify AVAX balance
+
+Check browser console for errors
+
+Licensing
+
+Open-source under MIT License
