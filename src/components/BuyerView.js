@@ -14,18 +14,12 @@ import {
   TabPanel,
   Spinner,
   Center,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   Icon,
   Badge,
   Stat,
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatArrow,
-  Divider,
   Fade,
   ScaleFade
 } from '@chakra-ui/react';
@@ -33,7 +27,7 @@ import { useWeb3 } from '../contexts/Web3Context';
 import { useOrders } from '../hooks/useOrders';
 import CreateOrderForm from './CreateOrderForm';
 import OrderCard from './OrderCard';
-import { FaPlus, FaRedo, FaUser, FaChartLine, FaWallet, FaClock, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { FaPlus, FaRedo, FaUser, FaChartLine, FaWallet, FaClock, FaCheckCircle } from 'react-icons/fa';
 
 const BuyerView = () => {
   const { account, isConnected } = useWeb3();
@@ -64,29 +58,63 @@ const BuyerView = () => {
     return (
       <Center py={20}>
         <Fade in={true}>
-          <Alert
-            status="info"
-            variant="subtle"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            textAlign="center"
-            height="300px"
-            maxW="600px"
-            borderRadius="2xl"
-            bg="rgba(26, 26, 46, 0.8)"
-            border="1px solid rgba(255, 255, 255, 0.1)"
-            backdropFilter="blur(20px)"
-            boxShadow="xl"
-          >
-            <Icon as={FaWallet} boxSize="60px" color="brand.400" mb={4} />
-            <AlertTitle mt={4} mb={1} fontSize="2xl" color={textColor}>
-              Wallet Not Connected
-            </AlertTitle>
-            <AlertDescription maxWidth="sm" color={subTextColor} fontSize="lg">
-              Please connect your wallet to view and manage your P2P orders.
-            </AlertDescription>
-          </Alert>
+          <VStack spacing={8} maxW="600px" mx="auto" px={6}>
+            <Box
+              bg={cardBg}
+              p={12}
+              borderRadius="2xl"
+              shadow="xl"
+              backdropFilter="blur(20px)"
+              border="1px solid"
+              borderColor={borderColor}
+              textAlign="center"
+              position="relative"
+              _before={{
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)',
+                borderRadius: '2xl',
+                zIndex: -1,
+              }}
+            >
+              <VStack spacing={6}>
+                <Icon as={FaWallet} boxSize={20} color="brand.400" />
+                <VStack spacing={4}>
+                  <Text fontSize="3xl" fontWeight="bold" color={textColor}>
+                    Wallet Not Connected
+                  </Text>
+                  <Text color={subTextColor} fontSize="lg" maxW="md" lineHeight="tall">
+                    Please connect your wallet to view and manage your P2P trading orders. 
+                    Connect to start buying and selling stablecoins securely.
+                  </Text>
+                </VStack>
+                <Button
+                  size="lg"
+                  colorScheme="blue"
+                  leftIcon={<Icon as={FaWallet} />}
+                  borderRadius="xl"
+                  px={8}
+                  py={6}
+                  fontSize="lg"
+                  fontWeight="semibold"
+                  bgGradient="linear(to-r, brand.400, brand.500, brand.600)"
+                  _hover={{
+                    bgGradient: "linear(to-r, brand.300, brand.400, brand.500)",
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)'
+                  }}
+                  transition="all 0.2s"
+                  onClick={() => window.location.reload()}
+                >
+                  Connect Wallet
+                </Button>
+              </VStack>
+            </Box>
+          </VStack>
         </Fade>
       </Center>
     );
@@ -134,14 +162,12 @@ const BuyerView = () => {
                 onClick={() => setShowCreateForm(!showCreateForm)}
                 colorScheme="blue"
                 borderRadius="xl"
-                _hover={{ 
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)'
-                }}
                 transition="all 0.2s"
                 bgGradient="linear(to-r, brand.400, brand.500, brand.600)"
-                _hover={{
-                  bgGradient: "linear(to-r, brand.300, brand.400, brand.500)",
+                _hover={{ 
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)',
+                  bgGradient: "linear(to-r, brand.300, brand.400, brand.500)"
                 }}
               >
                 {showCreateForm ? 'Cancel' : 'Create Order'}

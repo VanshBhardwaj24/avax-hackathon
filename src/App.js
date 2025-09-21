@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, ChakraProvider, extendTheme, ColorModeScript } from '@chakra-ui/react';
 import { Web3Provider } from './contexts/Web3Context';
 import Header from './components/Header';
+import Home from './components/Home';
 import BuyerView from './components/BuyerView';
 import MerchantView from './components/MerchantView';
 
@@ -64,7 +65,7 @@ const theme = extendTheme({
 });
 
 function App() {
-  const [activeView, setActiveView] = useState('buyer');
+  const [activeView, setActiveView] = useState('home');
 
   // Suppress WebSocket connection warnings in development
   useEffect(() => {
@@ -83,12 +84,14 @@ function App() {
 
   const renderActiveView = () => {
     switch (activeView) {
+      case 'home':
+        return <Home onNavigate={setActiveView} />;
       case 'buyer':
         return <BuyerView />;
       case 'merchant':
         return <MerchantView />;
       default:
-        return <BuyerView />;
+        return <Home onNavigate={setActiveView} />;
     }
   };
 

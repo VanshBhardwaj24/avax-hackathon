@@ -25,10 +25,11 @@ import {
   MenuList,
   MenuItem,
   Avatar,
-  Tooltip
+  Tooltip,
+  Icon
 } from '@chakra-ui/react';
 import { useWeb3 } from '../contexts/Web3Context';
-import { FaWallet, FaUser, FaStore, FaExclamationTriangle, FaBars, FaMoon, FaSun, FaCog } from 'react-icons/fa';
+import { FaWallet, FaUser, FaStore, FaExclamationTriangle, FaBars, FaMoon, FaSun, FaCog, FaHome, FaRocket, FaSignOutAlt, FaUserCircle, FaCopy } from 'react-icons/fa';
 
 const Header = ({ activeView, onViewChange }) => {
   const { 
@@ -54,6 +55,15 @@ const Header = ({ activeView, onViewChange }) => {
   const formatAddress = (address) => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const copyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(account);
+      // You could add a toast notification here if needed
+    } catch (err) {
+      console.error('Failed to copy address:', err);
+    }
   };
 
   const handleSwitchToAvalanche = async () => {
@@ -140,18 +150,25 @@ const Header = ({ activeView, onViewChange }) => {
       <Flex justify="space-between" align="center" maxW="1200px" mx="auto">
         {/* Logo and Brand */}
         <HStack spacing={4}>
-          <Text 
-            fontSize="2xl" 
-            fontWeight="bold" 
-            color={brandColor}
-            bgGradient="linear(to-r, brand.300, brand.500, brand.700)"
-            bgClip="text"
+          <HStack 
+            spacing={2}
+            marginRight={40}
+            cursor="pointer"
+            onClick={() => onViewChange('home')}
             _hover={{ transform: 'scale(1.05)' }}
             transition="all 0.2s"
-            cursor="pointer"
           >
-            P2P Flow
-          </Text>
+            <Icon as={FaRocket} color={brandColor} boxSize={6} />
+            <Text 
+              fontSize="2xl" 
+              fontWeight="bold" 
+              color={brandColor}
+              bgGradient="linear(to-r, brand.300, brand.500, brand.700)"
+              bgClip="text"
+            >
+              PeerFlow
+            </Text>
+          </HStack>
           
           {/* Mobile Menu Button */}
           <IconButton
@@ -170,7 +187,22 @@ const Header = ({ activeView, onViewChange }) => {
           {/* Navigation Tabs */}
           <HStack spacing={2}>
             <Button
-              size="sm"
+              size="md"
+              variant={activeView === 'home' ? 'solid' : 'ghost'}
+              colorScheme={activeView === 'home' ? 'blue' : 'gray'}
+              leftIcon={<FaHome />}
+              onClick={() => onViewChange('home')}
+              borderRadius="xl"
+              _hover={{ 
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+              }}
+              transition="all 0.2s"
+            >
+              Home
+            </Button>
+            <Button
+              size="md"
               variant={activeView === 'buyer' ? 'solid' : 'ghost'}
               colorScheme={activeView === 'buyer' ? 'blue' : 'gray'}
               leftIcon={<FaUser />}
@@ -185,7 +217,7 @@ const Header = ({ activeView, onViewChange }) => {
               Buyer View
             </Button>
             <Button
-              size="sm"
+              size="md"
               variant={activeView === 'merchant' ? 'solid' : 'ghost'}
               colorScheme={activeView === 'merchant' ? 'blue' : 'gray'}
               leftIcon={<FaStore />}
@@ -242,21 +274,44 @@ const Header = ({ activeView, onViewChange }) => {
                 leftIcon={<Avatar size="xs" name={formatAddress(account)} />}
                 rightIcon={<FaCog />}
                 borderRadius="xl"
-                _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
+                _hover={{ 
+                  bg: 'rgba(255, 255, 255, 0.1)',
+                  transform: 'translateY(-1px)'
+                }}
+                transition="all 0.2s"
                 color={textColor}
               >
                 {formatAddress(account)}
               </MenuButton>
               <MenuList 
-                bg="rgba(26, 26, 46, 0.95)"
-                border="1px solid rgba(255, 255, 255, 0.1)"
+                bg="rgba(235, 229, 229, 0.95)"
+                border="1px solid rgba(255, 255, 255, 0.2)"
                 backdropFilter="blur(20px)"
                 borderRadius="xl"
+                boxShadow="0 8px 32px rgba(195, 189, 189, 0.3)"
+                minW="200px"
               >
                 <MenuItem 
                   color={textColor}
-                  _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
+                  _hover={{ 
+                    bg: 'rgba(59, 130, 246, 0.1)',
+                    color: 'brand.300'
+                  }}
+                  icon={<Icon as={FaUserCircle} />}
+                  onClick={copyAddress}
+                  fontSize="sm"
+                >
+                  Copy Address
+                </MenuItem>
+                <MenuItem 
+                  color="red.300"
+                  _hover={{ 
+                    bg: 'rgba(221, 221, 221, 0.1)',
+                    color: 'red.200'
+                  }}
+                  icon={<Icon as={FaSignOutAlt} />}
                   onClick={disconnectWallet}
+                  fontSize="md"
                 >
                   Disconnect Wallet
                 </MenuItem>
@@ -297,6 +352,19 @@ const Header = ({ activeView, onViewChange }) => {
           <DrawerBody>
             <VStack spacing={4} align="stretch">
               <Button
+                variant={activeView === 'home' ? 'solid' : 'ghost'}
+                colorScheme={activeView === 'home' ? 'blue' : 'gray'}
+                leftIcon={<FaHome />}
+                onClick={() => {
+                  onViewChange('home');
+                  onClose();
+                }}
+                justifyContent="flex-start"
+                borderRadius="xl"
+              >
+                Home
+              </Button>
+              <Button
                 variant={activeView === 'buyer' ? 'solid' : 'ghost'}
                 colorScheme={activeView === 'buyer' ? 'blue' : 'gray'}
                 leftIcon={<FaUser />}
@@ -325,19 +393,68 @@ const Header = ({ activeView, onViewChange }) => {
               
               <Box pt={4} borderTop="1px solid rgba(255, 255, 255, 0.1)">
                 {isConnected ? (
-                  <VStack spacing={3}>
-                    <Text color={textColor} fontSize="sm">
-                      Connected: {formatAddress(account)}
-                    </Text>
-                    <Button
-                      colorScheme="red"
-                      variant="outline"
-                      onClick={disconnectWallet}
-                      size="sm"
+                  <VStack spacing={4}>
+                    <Box
+                      bg="rgba(59, 130, 246, 0.1)"
+                      p={4}
                       borderRadius="xl"
+                      border="1px solid rgba(59, 130, 246, 0.2)"
+                      w="full"
                     >
-                      Disconnect
-                    </Button>
+                      <VStack spacing={2}>
+                        <HStack spacing={2}>
+                          <Icon as={FaUserCircle} color="brand.400" />
+                          <Text color={textColor} fontSize="sm" fontWeight="semibold">
+                            Wallet Connected
+                          </Text>
+                        </HStack>
+                        <Text 
+                          color="brand.400" 
+                          fontSize="xs" 
+                          fontFamily="mono"
+                          bg="rgba(255, 255, 255, 0.05)"
+                          px={2}
+                          py={1}
+                          borderRadius="md"
+                        >
+                          {formatAddress(account)}
+                        </Text>
+                      </VStack>
+                    </Box>
+                    <HStack spacing={2} w="full">
+                      <Button
+                        leftIcon={<Icon as={FaCopy} />}
+                        variant="outline"
+                        onClick={copyAddress}
+                        size="sm"
+                        borderRadius="xl"
+                        flex={1}
+                        borderColor="rgba(255, 255, 255, 0.2)"
+                        color={textColor}
+                        _hover={{ 
+                          bg: 'rgba(59, 130, 246, 0.1)',
+                          borderColor: 'brand.400'
+                        }}
+                      >
+                        Copy
+                      </Button>
+                      <Button
+                        leftIcon={<Icon as={FaSignOutAlt} />}
+                        colorScheme="red"
+                        variant="outline"
+                        onClick={disconnectWallet}
+                        size="sm"
+                        borderRadius="xl"
+                        flex={1}
+                        _hover={{ 
+                          bg: 'rgba(239, 68, 68, 0.1)',
+                          transform: 'translateY(-1px)'
+                        }}
+                        transition="all 0.2s"
+                      >
+                        Disconnect
+                      </Button>
+                    </HStack>
                   </VStack>
                 ) : (
                   <Button
