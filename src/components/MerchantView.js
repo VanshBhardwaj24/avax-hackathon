@@ -45,8 +45,8 @@ const MerchantView = () => {
 
   const merchantOrders = getMerchantOrders();
   
-  const pendingOrders = merchantOrders.filter(order => order.status < 4);
-  const completedOrders = merchantOrders.filter(order => order.status === 4);
+  const pendingOrders = merchantOrders.filter(order => order.status < 2);
+  const completedOrders = merchantOrders.filter(order => order.status === 2);
   
   // Filter by order type for better organization
   const buyOrders = pendingOrders.filter(order => order.orderType === 0);

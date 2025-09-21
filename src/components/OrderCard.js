@@ -41,7 +41,6 @@ const OrderCard = ({ order, onActionComplete }) => {
       case 0: return 'yellow';    // Created
       case 1: return 'blue';      // BuyerPaid
       case 2: return 'green';     // Completed
-      case 4: return 'green';     // Completed
       default: return 'gray';
     }
   };
@@ -51,7 +50,6 @@ const OrderCard = ({ order, onActionComplete }) => {
       case 0: return 'Created';
       case 1: return 'Buyer Paid';
       case 2: return 'Completed';
-      case 4: return 'Completed';
       default: return 'Unknown';
     }
   };
@@ -61,7 +59,6 @@ const OrderCard = ({ order, onActionComplete }) => {
       case 0: return FaClock;
       case 1: return FaMoneyBillWave;
       case 2: return FaCheckCircle;
-      case 4: return FaCheckCircle;
       default: return FaExclamationTriangle;
     }
   };
@@ -71,7 +68,6 @@ const OrderCard = ({ order, onActionComplete }) => {
       case 0: return 25;
       case 1: return 75;
       case 2: return 100;
-      case 4: return 100;
       default: return 0;
     }
   };
@@ -127,7 +123,7 @@ const OrderCard = ({ order, onActionComplete }) => {
   };
 
   const renderActionButtons = () => {
-    if (order.status === 4) return null; // Order completed
+    if (order.status === 2) return []; // Order completed
 
     const buttons = [];
 
@@ -191,7 +187,8 @@ const OrderCard = ({ order, onActionComplete }) => {
       );
     }
 
-    return buttons;
+
+    return buttons || [];
   };
 
   return (
@@ -354,14 +351,17 @@ const OrderCard = ({ order, onActionComplete }) => {
         </VStack>
 
         {/* Action Buttons */}
-        {renderActionButtons().length > 0 && (
-          <>
-            <Divider borderColor="rgba(255, 255, 255, 0.1)" />
-            <HStack spacing={3} justify="center">
-              {renderActionButtons()}
-            </HStack>
-          </>
-        )}
+        {(() => {
+          const actionButtons = renderActionButtons();
+          return actionButtons && actionButtons.length > 0 && (
+            <>
+              <Divider borderColor="rgba(255, 255, 255, 0.1)" />
+              <HStack spacing={3} justify="center">
+                {actionButtons}
+              </HStack>
+            </>
+          );
+        })()}
       </VStack>
     </Box>
   );

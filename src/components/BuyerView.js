@@ -48,8 +48,8 @@ const BuyerView = () => {
 
   const buyerOrders = getBuyerOrders();
   
-  const pendingOrders = buyerOrders.filter(order => order.status < 4);
-  const completedOrders = buyerOrders.filter(order => order.status === 4);
+  const pendingOrders = buyerOrders.filter(order => order.status < 2);
+  const completedOrders = buyerOrders.filter(order => order.status === 2);
 
   const handleOrderCreated = () => {
     setShowCreateForm(false);
